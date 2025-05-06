@@ -1,4 +1,4 @@
-import { FoodDTO } from '../../application/dtos/foodDTO';
+import { FoodDTO } from '../../presentation/dtos/foodDTO';
 import { FoodStatus } from '../enums/FoodEnum';
 import { IFoodProps } from '../interfaces/IFoodProps';
 

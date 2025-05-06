@@ -1,4 +1,4 @@
-import { UserDTO } from '../../application/dtos/userDTO';
+import { UserDTO } from '../../presentation/dtos/userDTO';
 import {
   validateRole,
   validateUserType,
@@ -45,7 +45,10 @@ export class User {
       middle_name: this.middleName,
       birth_date: this.birthDate,
       email: this.email,
+      role: this.role,
       phone: this.phone,
+      address: this.address,
+      user_type: this.user_type,
     };
   }
 
