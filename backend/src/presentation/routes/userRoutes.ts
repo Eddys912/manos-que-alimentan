@@ -3,9 +3,9 @@ import { userController } from '../controllers/userController';
 
 const routerUser = Router();
 
-routerUser.get('/employees', userController.findAllEmployees);
-routerUser.get('/clients', userController.findAllClients);
-routerUser.get('/', userController.findUsersByFilter);
+routerUser.get('/employees', userController.getAllEmployees);
+routerUser.get('/clients', userController.getAllClients);
+routerUser.get('/', userController.getUsersByFilter);
 routerUser.post('/employee', userController.createEmployee);
 routerUser.post('/client', userController.createClient);
 routerUser.put('/:id', userController.updateUser);
