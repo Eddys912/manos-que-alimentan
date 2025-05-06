@@ -5,7 +5,7 @@ import { handleDatabaseError } from '../../shared/utils/handleDatabaseError';
 import pool from '../database/connection';
 
 export class FoodRepository implements IFoodRepository {
-  async createFood(food: Food): Promise<Food> {
+  async addFood(food: Food): Promise<Food> {
     try {
       const query = `INSERT INTO foods ( 
                       id, food_name, image, category, expiration_date,
