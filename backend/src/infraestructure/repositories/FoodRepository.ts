@@ -1,5 +1,5 @@
 import { Food } from '../../domain/entities/Food';
-import { IFoodProps } from '../../domain/interfaces/IFoodProps';
+import { IFoodFilter, IFoodProps } from '../../domain/interfaces/IFood';
 import { IFoodRepository } from '../../domain/interfaces/IFoodRepository';
 import { handleDatabaseError } from '../../shared/utils/handleDatabaseError';
 import pool from '../database/connection';
@@ -53,11 +53,41 @@ export class FoodRepository implements IFoodRepository {
     }
   }
 
-  async findFoodsByCategory(category: string): Promise<Food[]> {
+  async findFoodByName(name: string): Promise<boolean> {
     try {
-      const query = 'SELECT * FROM foods WHERE category = $1';
-      const result = await pool.query<IFoodProps>(query, [category]);
-      if (result.rowCount === 0) return [];
+      const query = 'SELECT * FROM foods WHERE LOWER(food_name) = LOWER($1)';
+      const result = await pool.query<IFoodProps>(query, [name]);
+      if (result.rowCount === 0) return false;
+      return true;
+    } catch (e: any) {
+      handleDatabaseError(e, 'buscar alimento por id');
+    }
+  }
+
+  async findFoodsByFilter(filters: IFoodFilter): Promise<Food[]> {
+    try {
+      const values: any[] = [];
+      const conditions: string[] = [];
+
+      if (filters.name) {
+        values.push(`%${filters.name}%`);
+        conditions.push(`LOWER(food_name) LIKE $${values.length}`);
+      }
+
+      if (filters.category) {
+        values.push(filters.category);
+        conditions.push(`LOWER(category) = $${values.length}`);
+      }
+
+      if (filters.status) {
+        values.push(filters.status);
+        conditions.push(`LOWER(status::text) = $${values.length}`);
+      }
+
+      const whereClause =
+        conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+      const query = `SELECT * FROM foods ${whereClause};`;
+      const result = await pool.query<IFoodProps>(query, values);
 
       return result.rows.map((row: IFoodProps) => this.createFoodFromRow(row));
     } catch (e: any) {

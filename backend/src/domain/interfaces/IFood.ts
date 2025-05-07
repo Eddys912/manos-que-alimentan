@@ -11,3 +11,9 @@ export interface IFoodProps {
   created_at: Date;
   updated_at: Date | null;
 }
+
+export interface IFoodFilter {
+  name?: string | null;
+  category?: string | null;
+  status?: string | null;
+}

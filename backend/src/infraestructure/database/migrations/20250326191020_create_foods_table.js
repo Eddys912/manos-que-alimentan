@@ -10,7 +10,7 @@ exports.up = async (knex) => {
   // Crear la tabla 'foods'
   await knex.schema.createTable('foods', (table) => {
     table.string('id').primary();
-    table.string('food_name', 150).notNullable();
+    table.string('food_name', 150).unique().notNullable();
     table.string('image', 500).notNullable();
     table.string('category', 100).notNullable();
     table.date('expiration_date');

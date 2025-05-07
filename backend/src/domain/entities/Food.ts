@@ -1,6 +1,5 @@
-import { FoodDTO } from '../../presentation/dtos/foodDTO';
 import { FoodStatus } from '../enums/FoodEnum';
-import { IFoodProps } from '../interfaces/IFoodProps';
+import { IFoodProps } from '../interfaces/IFood';
 
 export class Food {
   private id: string;
@@ -10,8 +9,8 @@ export class Food {
   private expirationDate: Date;
   private quantity: number;
   private status: FoodStatus;
-  private created_at: Date;
-  private updated_at: Date | null;
+  private createdAt: Date;
+  private updatedAt: Date | null;
 
   constructor(props: IFoodProps) {
     this.id = props.id ?? crypto.randomUUID();
@@ -21,20 +20,8 @@ export class Food {
     this.expirationDate = props.expiration_date;
     this.quantity = props.quantity;
     this.status = props.status ?? FoodStatus.AVAILABLE;
-    this.created_at = props.created_at ?? new Date();
-    this.updated_at = props.updated_at ?? null;
-  }
-
-  public toDTO(): FoodDTO {
-    return {
-      id: this.id,
-      food_name: this.foodName,
-      image: this.image,
-      category: this.category,
-      expiration_date: this.expirationDate,
-      quantity: this.quantity,
-      status: this.status,
-    };
+    this.createdAt = props.created_at ?? new Date();
+    this.updatedAt = props.updated_at ?? null;
   }
 
   getId(): string {
@@ -66,11 +53,15 @@ export class Food {
   }
 
   getCreatedAt(): Date {
-    return this.created_at;
+    return this.createdAt;
   }
 
   getUpdatedAt(): Date | null {
-    return this.updated_at;
+    return this.updatedAt;
+  }
+
+  setId(id: string): void {
+    this.id = id;
   }
 
   setFoodName(foodName: string): void {
@@ -95,5 +86,13 @@ export class Food {
 
   setStatus(status: FoodStatus): void {
     this.status = status;
+  }
+
+  setCreatedAt(createdAt: Date): void {
+    this.createdAt = createdAt;
+  }
+
+  setUpdatedAt(updatedAt: Date): void {
+    this.updatedAt = updatedAt;
   }
 }
