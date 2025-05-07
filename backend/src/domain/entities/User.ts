@@ -1,10 +1,10 @@
-import { UserDTO } from '../../presentation/dtos/userDTO';
 import {
   validateRole,
+  validateUserStatus,
   validateUserType,
-} from '../../shared/utils/UserValidationTypeAndRole';
-import { UserRole, UserType } from '../enums/UserEnum';
-import { IUserProps } from '../interfaces/IUserProps';
+} from '../../shared/utils/UserValidations';
+import { UserRole, UserStatus, UserType } from '../enums/UserEnum';
+import { IUserProps } from '../interfaces/IUser';
 
 export class User {
   private id: string;
@@ -17,9 +17,10 @@ export class User {
   private role: UserRole;
   private phone: string | null;
   private address: string;
-  private user_type: UserType;
-  private created_at: Date;
-  private updated_at: Date | null;
+  private userType: UserType;
+  private status: UserStatus;
+  private createdAt: Date;
+  private updatedAt: Date | null;
 
   constructor(props: IUserProps) {
     this.id = props.id ?? crypto.randomUUID();
@@ -32,24 +33,10 @@ export class User {
     this.role = validateRole(props.role);
     this.phone = props.phone ?? null;
     this.address = props.address;
-    this.user_type = validateUserType(props.user_type);
-    this.created_at = props.created_at ?? new Date();
-    this.updated_at = props.updated_at ?? null;
-  }
-
-  public toDTO(): UserDTO {
-    return {
-      id: this.id,
-      first_name: this.firstName,
-      last_name: this.lastName,
-      middle_name: this.middleName,
-      birth_date: this.birthDate,
-      email: this.email,
-      role: this.role,
-      phone: this.phone,
-      address: this.address,
-      user_type: this.user_type,
-    };
+    this.userType = validateUserType(props.user_type);
+    this.status = validateUserStatus(props.status);
+    this.createdAt = props.created_at ?? new Date();
+    this.updatedAt = props.updated_at ?? null;
   }
 
   getId(): string {
@@ -93,15 +80,23 @@ export class User {
   }
 
   getUserType(): UserType {
-    return this.user_type;
+    return this.userType;
+  }
+
+  getStatus(): UserStatus {
+    return this.status;
   }
 
   getCreatedAt(): Date {
-    return this.created_at;
+    return this.createdAt;
   }
 
   getUpdatedAt(): Date | null {
-    return this.updated_at;
+    return this.updatedAt;
+  }
+
+  setId(id: string): void {
+    this.id = id;
   }
 
   setFirstName(firstName: string): void {
@@ -140,7 +135,19 @@ export class User {
     this.address = address;
   }
 
-  setUserType(user_type: UserType): void {
-    this.user_type = user_type;
+  setUserType(userType: UserType): void {
+    this.userType = userType;
+  }
+
+  setStatus(status: UserStatus): void {
+    this.status = status;
+  }
+
+  setCreatedAt(createdAt: Date): void {
+    this.createdAt = createdAt;
+  }
+
+  setUpdatedAt(updatedAt: Date): void {
+    this.updatedAt = updatedAt;
   }
 }

@@ -1,4 +1,4 @@
-import { UserType, UserRole } from '../enums/UserEnum';
+import { UserType, UserRole, UserStatus } from '../enums/UserEnum';
 
 export interface IUserProps {
   id: string;
@@ -12,6 +12,14 @@ export interface IUserProps {
   phone: string | null;
   address: string;
   user_type: UserType;
+  status: UserStatus;
   created_at: Date;
   updated_at: Date | null;
+}
+
+export interface IUserFilter {
+  name?: string | null;
+  email?: string | null;
+  role?: string | null;
+  status?: string | null;
 }

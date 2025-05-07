@@ -21,6 +21,14 @@ exports.up = async (knex) => {
     END $$;
   `);
 
+  await knex.schema.raw(`
+    DO $$ BEGIN
+      CREATE TYPE user_status AS ENUM ('Activo', 'Bloqueado', 'Inactivo');
+    EXCEPTION
+      WHEN duplicate_object THEN null;
+    END $$;
+  `);
+
   await knex.schema.createTable('users', (table) => {
     table.string('id').primary();
     table.string('first_name', 150).notNullable();
@@ -43,6 +51,13 @@ exports.up = async (knex) => {
         useNative: true,
         existingType: true,
         enumName: 'user_types',
+      })
+      .notNullable();
+    table
+      .enu('status', null, {
+        useNative: true,
+        existingType: true,
+        enumName: 'user_status',
       })
       .notNullable();
     table.timestamps(true, true);
@@ -83,6 +98,14 @@ exports.down = async (knex) => {
   await knex.schema.raw(`
     DO $$ BEGIN
       DROP TYPE IF EXISTS user_types;
+    EXCEPTION
+      WHEN others THEN null;
+    END $$;
+  `);
+
+  await knex.schema.raw(`
+    DO $$ BEGIN
+      DROP TYPE IF EXISTS user_status;
     EXCEPTION
       WHEN others THEN null;
     END $$;

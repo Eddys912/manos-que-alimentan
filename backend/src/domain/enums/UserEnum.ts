@@ -10,3 +10,9 @@ export enum UserRole {
   FOOD_ADMIN = 'Gestor de alimentos',
   EMPLOYEES_ADMIN = 'Gestor de empleados',
 }
+
+export enum UserStatus {
+  ACTIVE = 'Activo',
+  BLOCKED = 'Bloqueado',
+  INACTIVE = 'Inactivo',
+}

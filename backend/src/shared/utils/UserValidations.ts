@@ -1,4 +1,4 @@
-import { UserRole, UserType } from '../../domain/enums/UserEnum';
+import { UserRole, UserStatus, UserType } from '../../domain/enums/UserEnum';
 
 export const validateRole = (role: UserRole): UserRole => {
   if (Object.values(UserRole).includes(role as UserRole)) {
@@ -14,4 +14,12 @@ export const validateUserType = (userType: string): UserType => {
   }
 
   throw new Error('Tipo de usuario no válido');
+};
+
+export const validateUserStatus = (userStatus: string): UserStatus => {
+  if (Object.values(UserStatus).includes(userStatus as UserStatus)) {
+    return userStatus as UserStatus;
+  }
+
+  throw new Error('Estatus de usuario no válido');
 };

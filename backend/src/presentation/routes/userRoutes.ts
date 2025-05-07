@@ -1,14 +1,22 @@
 import { Router } from 'express';
-import { userController } from '../controllers/userController';
+import { IUserRepository } from '../../domain/interfaces/IUserRepository';
+import { UserService } from '../../domain/services/UserService';
+import { UserRepository } from '../../infraestructure/repositories/UserRepository';
+import { UserController } from '../controllers/UserController';
 
 const routerUser = Router();
 
-routerUser.get('/employees', userController.getAllEmployees);
-routerUser.get('/clients', userController.getAllClients);
-routerUser.get('/', userController.getUsersByFilter);
-routerUser.post('/employee', userController.createEmployee);
-routerUser.post('/client', userController.createClient);
-routerUser.put('/:id', userController.updateUser);
-routerUser.delete('/:id', userController.deleteUser);
+const userRepository: IUserRepository = new UserRepository();
+const userService = new UserService(userRepository);
+const userController = new UserController(userService);
+
+routerUser.get('/employees/all', userController.getAllEmployees.bind(userController));
+routerUser.get('/clients/all', userController.getAllClients.bind(userController));
+routerUser.get('/:id', userController.getUserById.bind(userController));
+routerUser.get('/', userController.getUsersByFilter.bind(userController));
+routerUser.post('/employee', userController.createEmployee.bind(userController));
+routerUser.post('/client', userController.createClient.bind(userController));
+routerUser.put('/:id', userController.updateUser.bind(userController));
+routerUser.delete('/:id', userController.deleteUser.bind(userController));
 
 export default routerUser;
