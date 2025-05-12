@@ -1,0 +1,49 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables
+**/.env
+*.local
+
+# Build files
+backend/dist/
+backend/build/
+frontend/dist/
+frontend/build/
+dist/
+dist-ssr/
+
+# Logs
+backend/logs/
+frontend/logs/
+backend/debug.log
+frontend/debug.log
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+lerna-debug.log*
+
+# Temporary files
+backend/tmp/
+backend/.cache/
+frontend/.cache/
+
+# Coverage reports
+backend/coverage/
+frontend/coverage/
+
+# Editor and OS-specific files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
