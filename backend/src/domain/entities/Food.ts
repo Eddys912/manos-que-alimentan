@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { validateFoodStatus } from '../../shared/utils/foodValidations';
 import { FoodStatus } from '../enums/Food.enum';
 import { IFoodProps } from '../interfaces/IFood';

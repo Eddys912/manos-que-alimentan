@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { User } from '../entities/User';
 import { IUserRepository } from '../interfaces/IUserRepository';
 import { UserDTO, toUserDTO } from '../../presentation/dtos/userDTO';

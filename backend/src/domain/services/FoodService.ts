@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { Food } from '../../domain/entities/Food';
 import { IFoodRepository } from '../../domain/interfaces/IFoodRepository';
 import { FoodDTO, toFoodDTO } from '../../presentation/dtos/foodDTO';
