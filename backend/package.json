@@ -1,0 +1,42 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/server.js",
+  "scripts": {
+    "start": "node build/server.js",
+    "dev": "ts-node-dev src/server.ts",
+    "build": "tsc",
+    "migrate:dev": "knex migrate:latest --env development",
+    "rollback:dev": "knex migrate:rollback --env development",
+    "seed:dev": "knex seed:run --env development",
+    "reset:dev": "pnpm run rollback:dev --all --env development && pnpm run migrate:dev --env development && pnpm run seed:dev --env development",
+    "migrate:prod": "knex migrate:latest --env production",
+    "rollback:prod": "knex migrate:rollback --env production",
+    "reset:prod": "pnpm run migrate:prod --all --env production && pnpm run migrate:prod --env production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.5",
+  "dependencies": {
+    "bcryptjs": "3.0.2",
+    "cors": "2.8.5",
+    "dotenv": "16.4.7",
+    "express": "4.21.2",
+    "helmet": "8.1.0",
+    "jsonwebtoken": "9.0.2",
+    "knex": "3.1.0",
+    "pg": "8.14.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "5.0.2",
+    "@types/cors": "2.8.17",
+    "@types/express": "5.0.1",
+    "@types/jsonwebtoken": "9.0.9",
+    "@types/node": "22.13.10",
+    "@types/pg": "8.11.11",
+    "ts-node-dev": "2.0.0",
+    "typescript": "5.8.2"
+  }
+}
