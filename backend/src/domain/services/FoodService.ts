@@ -137,10 +137,13 @@ export class FoodService {
    */
   private validateFood(food: Food) {
     isNotEmpty(food.getFoodName(), 'Nombre');
-    isNotEmpty(food.getImage(), 'Imágen');
+    isNotEmpty(food.getImageURL(), 'Imágen');
     isNotEmpty(food.getCategory(), 'Categoría');
     isNotEmpty(food.getExpirationDate(), 'Fecha de expiración');
     isNotEmpty(food.getQuantity(), 'Cantidad');
+
+    if (isNaN(food.getExpirationDate().getTime()))
+      throw CustomException.validation('La fecha de expiración es inválida.');
 
     if (new Date(food.getExpirationDate()) < new Date())
       throw CustomException.businessRule(

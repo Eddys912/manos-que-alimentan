@@ -1,3 +1,14 @@
+/**
+ * Checks if the given date is valid.
+ *
+ * @param {Date | string} date - The date to validate. Can be a Date object or a date string.
+ * @returns {boolean} Returns true if the date is valid, otherwise false.
+ *
+ * @example
+ * isValidDate("2025-05-11") // true
+ * isValidDate("invalid-date") // false
+ * isValidDate(new Date()) // true
+ */
 export function isValidDate(date: Date | string): boolean {
   const parsed = new Date(date);
   return !isNaN(parsed.getTime());
@@ -22,6 +33,16 @@ export function formatDate(date: Date | string): string {
   return `${day}/${month}/${year}`;
 }
 
+/**
+ * Calculates the age based on a given birth date.
+ *
+ * @param {Date | string} birthDate - The birth date to calculate the age from.
+ * @returns {number} The calculated age in full years.
+ *
+ * @example
+ * calculateAge("2000-05-11") // 25 (as of 2025-05-11)
+ * calculateAge(new Date("1990-01-01")) // 35 (as of 2025)
+ */
 export function calculateAge(birthDate: Date | string): number {
   const birth = new Date(birthDate);
   const today = new Date();

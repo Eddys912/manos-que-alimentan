@@ -41,7 +41,7 @@ export class Food {
     return this.foodName;
   }
 
-  getImage(): string {
+  getImageURL(): string {
     return this.imageUrl;
   }
 

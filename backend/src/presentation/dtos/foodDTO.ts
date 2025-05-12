@@ -15,7 +15,7 @@ export const toFoodDTO = (food: Food): FoodDTO => {
   return {
     id: food.getId(),
     food_name: food.getFoodName(),
-    image: food.getImage(),
+    image: food.getImageURL(),
     category: food.getCategory(),
     expiration_date: formatDate(food.getExpirationDate()),
     quantity: food.getQuantity(),

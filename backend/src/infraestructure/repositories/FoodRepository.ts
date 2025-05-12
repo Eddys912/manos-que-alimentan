@@ -35,7 +35,7 @@ export class FoodRepository implements IFoodRepository {
       const values = [
         food.getId(),
         food.getFoodName(),
-        food.getImage(),
+        food.getImageURL(),
         food.getCategory(),
         food.getExpirationDate(),
         food.getQuantity(),
@@ -71,7 +71,7 @@ export class FoodRepository implements IFoodRepository {
 
       const query = `
         UPDATE foods SET 
-          food_name = $1, image = $2, category = $3,
+          food_name = $1, image_url = $2, category = $3,
           expiration_date = $4, quantity = $5, status = $6,
           updated_at = $7
         WHERE id = $8
@@ -80,7 +80,7 @@ export class FoodRepository implements IFoodRepository {
 
       const values = [
         food.getFoodName(),
-        food.getImage(),
+        food.getImageURL(),
         food.getCategory(),
         food.getExpirationDate(),
         food.getQuantity(),
