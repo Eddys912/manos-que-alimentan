@@ -13,7 +13,7 @@
     "reset:dev": "pnpm run rollback:dev --all --env development && pnpm run migrate:dev --env development && pnpm run seed:dev --env development",
     "migrate:prod": "knex migrate:latest --env production",
     "rollback:prod": "knex migrate:rollback --env production",
-    "reset:prod": "pnpm run migrate:prod --all --env production && pnpm run migrate:prod --env production"
+    "reset:prod": "pnpm run rollback:prod --all --env production && pnpm run migrate:prod --env production"
   },
   "keywords": [],
   "author": "",
