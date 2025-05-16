@@ -3,7 +3,11 @@ import { Food } from '../../domain/entities/Food';
 import { IFoodRepository } from '../../domain/interfaces/IFoodRepository';
 import { FoodDTO, toFoodDTO } from '../../presentation/dtos/foodDTO';
 import { CustomException } from '../../shared/errors/CustomException';
-import { formatDate } from '../../shared/utils/dateUtils';
+import {
+  isFutureOrToday,
+  formatDate,
+  isValidDate,
+} from '../../shared/utils/dateUtils';
 import { isNotEmpty } from '../../shared/utils/inputValidator';
 import { FoodCategory, FoodStatus } from '../enums/Food.enum';
 import {
@@ -29,7 +33,7 @@ export class FoodService {
     const food = new Food({
       ...props,
       id: crypto.randomUUID(),
-      status: FoodStatus.AVAILABLE,
+      status: props.status || FoodStatus.AVAILABLE,
     });
     this.validateFood(food);
     const saveProduct = await this.foodRepository.addFood(food);
@@ -143,15 +147,15 @@ export class FoodService {
     isNotEmpty(food.getExpirationDate(), 'Fecha de expiración');
     isNotEmpty(food.getQuantity(), 'Cantidad');
 
-    if (isNaN(food.getExpirationDate().getTime()))
+    if (!isValidDate(food.getExpirationDate()))
       throw CustomException.validation('La fecha de expiración es inválida.');
 
-    if (new Date(food.getExpirationDate()) < new Date())
+    if (!isFutureOrToday(food.getExpirationDate()))
       throw CustomException.businessRule(
         'La fecha de expiración no puede ser anterior a hoy.'
       );
 
-    if (food.getQuantity() <= 0)
+    if (food.getQuantity() < 0)
       throw CustomException.businessRule('La cantidad debe ser mayor a cero.');
 
     if (!Object.values(FoodStatus).includes(food.getStatus() as FoodStatus))
@@ -164,7 +168,7 @@ export class FoodService {
       !Object.values(FoodCategory).includes(food.getCategory() as FoodCategory)
     )
       throw CustomException.businessRule(
-        `Categoría de alimento inválido. Debe ser uno de: 
+        `Categoría de alimento inválido. Debe ser uno de:
         ${Object.values(FoodCategory).join(', ')}`
       );
   }

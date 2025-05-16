@@ -55,3 +55,29 @@ export function calculateAge(birthDate: Date | string): number {
 
   return age;
 }
+
+/**
+ * Checks whether a given deadline date is still valid.
+ *
+ * @param {Date | string} expirationDate - The date to validate. Can be a Date
+ * object or a date string.
+ * @returns {boolean} Returns true if the date is today or in the future, otherwise false.
+ *
+ * @example
+ * isFutureOrToday("2025-06-01") // true
+ * isFutureOrToday("2023-12-31") // false
+ * isFutureOrToday(new Date()) // true (if run today)
+ */
+export function isFutureOrToday(expirationDate: Date | string): boolean {
+  const date = new Date(expirationDate);
+  const today = new Date();
+
+  const year = today.getUTCFullYear() - date.getUTCFullYear();
+  const month = today.getUTCMonth() - date.getUTCMonth();
+  const day = today.getUTCDate() - date.getUTCDate();
+
+  if (year > 0 || (year === 0 && month > 0) || (month === 0 && day > 0))
+    return false;
+
+  return true;
+}

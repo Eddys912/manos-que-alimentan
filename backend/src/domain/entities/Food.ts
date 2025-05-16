@@ -15,8 +15,8 @@ export class Food {
   private expirationDate: Date;
   private quantity: number;
   private status: FoodStatus;
-  private createdAt?: Date;
-  private updatedAt?: Date;
+  private createdAt: Date;
+  private updatedAt: Date;
 
   /**
    * Constructs a new Food entity.
@@ -62,11 +62,11 @@ export class Food {
     return this.status;
   }
 
-  getCreatedAt(): Date | undefined {
+  getCreatedAt(): Date {
     return this.createdAt;
   }
 
-  getUpdatedAt(): Date | undefined {
+  getUpdatedAt(): Date {
     return this.updatedAt;
   }
 
