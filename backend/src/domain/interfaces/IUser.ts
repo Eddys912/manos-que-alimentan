@@ -12,7 +12,7 @@ export interface IUserProps {
   email: string;
   password: string;
   role: UserRole;
-  phone: string | null;
+  phone: string;
   address: string;
   user_type: UserType;
   status: UserStatus;

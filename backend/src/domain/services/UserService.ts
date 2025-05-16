@@ -36,7 +36,7 @@ export class UserService {
       id: crypto.randomUUID(),
       role: props.role ?? UserRole.USERS_ADMIN,
       user_type: props.user_type ?? UserType.EMPLOYEE,
-      status: UserStatus.ACTIVE,
+      status: props.status || UserStatus.ACTIVE,
       password: await bcrypt.hash(props.password, 10),
     });
     this.validateUser(user);
@@ -58,7 +58,7 @@ export class UserService {
       id: crypto.randomUUID(),
       role: props.role ?? UserRole.USER,
       user_type: props.user_type ?? UserType.CLIENT,
-      status: UserStatus.ACTIVE,
+      status: props.status || UserStatus.ACTIVE,
       password: await bcrypt.hash(props.password, 10),
     });
     this.validateUser(user);
@@ -179,6 +179,7 @@ export class UserService {
     isNotEmpty(user.getPassword(), 'Contraseña');
     isNotEmpty(user.getPhone(), 'Teléfono');
     isNotEmpty(user.getAddress(), 'Dirección');
+    isNotEmpty(user.getStatus(), 'Estatus');
 
     if (!isValidDate(user.getBirthDate()))
       throw CustomException.businessRule('La fecha de nacimiento no es válida');

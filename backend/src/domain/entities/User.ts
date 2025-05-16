@@ -20,12 +20,12 @@ export class User {
   private email: string;
   private password: string;
   private role: UserRole;
-  private phone: string | null;
+  private phone: string;
   private address: string;
   private userType: UserType;
   private status: UserStatus;
-  private createdAt?: Date;
-  private updatedAt?: Date;
+  private createdAt: Date;
+  private updatedAt: Date;
 
   /**
    * Constructs a new User entity.
@@ -40,7 +40,7 @@ export class User {
     this.email = props.email;
     this.password = props.password;
     this.role = validateRole(props.role);
-    this.phone = props.phone ?? null;
+    this.phone = props.phone;
     this.address = props.address;
     this.userType = validateUserType(props.user_type);
     this.status = validateUserStatus(props.status);
@@ -80,7 +80,7 @@ export class User {
     return this.role;
   }
 
-  getPhone(): string | null {
+  getPhone(): string {
     return this.phone;
   }
 
@@ -96,11 +96,11 @@ export class User {
     return this.status;
   }
 
-  getCreatedAt(): Date | undefined {
+  getCreatedAt(): Date {
     return this.createdAt;
   }
 
-  getUpdatedAt(): Date | undefined {
+  getUpdatedAt(): Date {
     return this.updatedAt;
   }
 
@@ -136,7 +136,7 @@ export class User {
     this.role = role;
   }
 
-  setPhone(phone: string | null): void {
+  setPhone(phone: string): void {
     this.phone = phone;
   }
 

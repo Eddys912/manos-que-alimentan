@@ -12,6 +12,7 @@ export interface UserDTO {
   middle_name: string | null;
   birth_date: string;
   email: string;
+  hire_date: string;
   role: string;
   phone: string | null;
   address: string;
@@ -34,6 +35,7 @@ export const toUserDTO = (user: User): UserDTO => {
     birth_date: formatDate(user.getBirthDate()),
     email: user.getEmail(),
     role: user.getRole(),
+    hire_date: formatDate(user.getCreatedAt()),
     phone: user.getPhone(),
     address: user.getAddress(),
     status: user.getStatus(),
