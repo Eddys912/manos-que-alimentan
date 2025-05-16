@@ -13,34 +13,38 @@ import { DatabaseError } from '../errors/DataBaseError';
  * @throws {DatabaseError} For other database errors
  */
 export function handlePostgresError(error: any, operation: string): never {
-  console.error(`Error en operación "${operation}":`, error);
+  const prefix = `Error en operación "${operation}":`;
 
   switch (error.code) {
     case '23505':
       throw DatabaseError.unique(
-        `Violación de restricción única: ${error.constraint || 'unknown'}`
+        `${prefix} Violación de restricción única: ${
+          error.constraint || 'unknown'
+        }`
       );
 
     case '23503':
       throw DatabaseError.foreignKey(
-        `Violación de clave foránea: ${error.constraint || 'unknown'}`
+        `${prefix} Violación de clave foránea: ${error.constraint || 'unknown'}`
       );
 
     case '23502':
       throw DatabaseError.notNull(
-        `Violación de restricción NOT NULL en columna: ${
+        `${prefix} Violación de restricción NOT NULL en columna: ${
           error.column || 'unknown'
         }`
       );
 
     case '23514':
       throw DatabaseError.enumViolation(
-        `Violación de restricción CHECK: ${error.constraint || 'unknown'}`
+        `${prefix} Violación de restricción CHECK: ${
+          error.constraint || 'unknown'
+        }`
       );
 
     case '22P02':
       throw DatabaseError.enumViolation(
-        `Valor inválido para tipo enumerado: ${error.message}`
+        `${prefix} Valor inválido para tipo enumerado: ${error.message}`
       );
 
     case '08000':
@@ -48,26 +52,30 @@ export function handlePostgresError(error: any, operation: string): never {
     case '08006':
     case '08001':
     case '08004':
-      throw DatabaseError.connection(`Error de conexión a base de datos`);
+      throw DatabaseError.connection(
+        `${prefix} Error de conexión a base de datos`
+      );
 
     case '22001':
-      throw DatabaseError.general(`Valor excede longitud máxima permitida`);
+      throw DatabaseError.general(
+        `${prefix} Valor excede longitud máxima permitida`
+      );
 
     case '53000':
     case '53100':
     case '53200':
-      throw DatabaseError.general(`Recursos insuficientes en BD`);
+      throw DatabaseError.general(`${prefix} Recursos insuficientes en BD`);
 
     case '42P01':
-      throw DatabaseError.general(`Tabla no encontrada`);
+      throw DatabaseError.general(`${prefix} Tabla no encontrada`);
 
     case '42703':
-      throw DatabaseError.general(`Columna no encontrada`);
+      throw DatabaseError.general(`${prefix} Columna no encontrada`);
 
     case '42P00':
-      throw DatabaseError.general(`Error de sintaxis SQL`);
+      throw DatabaseError.general(`${prefix} Error de sintaxis SQL`);
 
     default:
-      throw DatabaseError.general(`${error.message}`);
+      throw DatabaseError.general(`${prefix} ${error.message}`);
   }
 }
